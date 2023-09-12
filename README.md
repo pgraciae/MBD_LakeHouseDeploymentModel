@@ -22,13 +22,13 @@ Este proyecto tiene como objetivo automatizar el despliegue de una infraestructu
 
 1. Clonar este repositorio.
     ```bash
-    git clone [URL-del-repositorio]
+    git clone https://github.com/pgraciae/MBD_LakeHouseDeploymentModel.git
     ```
 2. Modificar el fichero .env para configurar las variables de entorno.
 
 3. Navegar hasta el directorio del proyecto.
     ```bash
-    cd [nombre-del-directorio]
+    cd MBD_LakeHouseDeploymentModel
     ```
 
 4. Construir y ejecutar los contenedores de Docker.
@@ -44,7 +44,7 @@ Dado que este es un proyecto académico, no se aceptan contribuciones externas e
 
 ## Licencia
 
-Este proyecto está bajo una licencia MIT. Ver el archivo [LICENSE.md](LICENSE.md) para más detalles.
+Este proyecto está bajo una licencia MIT. Ver el archivo LICENSE.md para más detalles.
 
 ## Contacto y Mantenedor
 

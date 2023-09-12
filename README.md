@@ -48,9 +48,9 @@ Este proyecto está bajo una licencia MIT. Ver el archivo LICENSE.md para más d
 
 ## Contacto y Mantenedor
 
-- Nombre del Autor
-- Correo Electrónico
-- LinkedIn
+- Pol Gràcia
+- pol.graciae@gmail.com
+
 
 ## Agradecimientos
 

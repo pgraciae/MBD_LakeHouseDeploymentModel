@@ -1,0 +1,93 @@
+version: '3'
+x-airflow-common:
+    &airflow-common
+    image: apache/airflow:2.5.1
+    environment:
+        &airflow-common-env
+        AIRFLOW__CORE__EXECUTOR: LocalExecutor
+        AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+        AIRFLOW__CORE__FERNET_KEY: z13O564iA8yp8ZDBjjByUWY4Cv6l2K-qakSQZbVy5SM=
+        AIRFLOW__WEBSERVER__SECRET_KEY: 6tcUCdnV$$kXz!
+        AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "True"
+        AIRFLOW__WEBSERVER__INSTANCE_NAME: "Local - ASDP Airflow"
+        AIRFLOW__CORE__DEFAULT_TIMEZONE: "Europe/Madrid"
+        AIRFLOW__CORE__PARALLELISM: 5
+        AIRFLOW__WEBSERVER__WORKERS: 2
+        AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "True"
+    volumes:
+        - ./airflow/dags:/opt/airflow/dags
+    networks:
+        - airflow
+    depends_on:
+        &airflow-common-depends-on
+        postgres:
+            condition: service_healthy
+
+services:
+  azuredeployment:
+    container_name: AzureDeploy
+    build:
+      context: ./azure/
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./azure:/storage/
+    env_file:
+      - azure/.env
+
+  airflow:
+      <<: *airflow-common
+      ports:
+          - 8080:8080
+      command: airflow standalone
+      healthcheck:
+          test:
+              [
+                  "CMD",
+                  "curl",
+                  "--fail",
+                  "http://localhost:8080/health"
+              ]
+          interval: 10s
+          timeout: 10s
+          retries: 5
+      restart: always
+      depends_on:
+          <<: *airflow-common-depends-on
+          init:
+              condition: service_completed_successfully
+
+  postgres:
+      image: postgres:13.3
+      ports:
+          - 5432:532
+      networks:
+          - airflow
+      environment:
+          POSTGRES_USER: airflow
+          POSTGRES_PASSWORD: airflow
+          POSTGRES_DB: airflow
+      volumes:
+          - postgres-db-volume:/var/lib/postgresql/data
+      healthcheck:
+          test: [ "CMD", "pg_isready", "-U", "airflow" ]
+          interval: 5s
+          retries: 5
+      restart: always
+
+  init:
+      <<: *airflow-common
+      command: version
+      environment:
+          <<: *airflow-common-env
+          _AIRFLOW_DB_UPGRADE: 'true'
+          _AIRFLOW_WWW_USER_CREATE: 'true'
+          _AIRFLOW_WWW_USER_USERNAME: airflow
+          _AIRFLOW_WWW_USER_PASSWORD: airflow
+
+networks:
+  airflow:
+  
+volumes:
+  postgres-db-volume:

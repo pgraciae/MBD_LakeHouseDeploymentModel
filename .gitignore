@@ -4,3 +4,4 @@ __azurite_db_queue__.json
 __azurite_db_queue_extent__.json
 airflow-data/logs
 airflow-data/plugins
+caso-estudio/data/

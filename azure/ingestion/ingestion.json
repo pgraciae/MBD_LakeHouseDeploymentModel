@@ -14,6 +14,10 @@
         "dataFactory_identity_type": {
             "type": "string",
             "defaultValue": "SystemAssigned"
+        },
+        "AzureBlobStorage1_properties_typeProperties_serviceEndpoint": {
+            "type": "string",
+            "defaultValue": "https://sastoragelayertest02.blob.core.windows.net/"
         }
     },
     "variables": {
@@ -30,6 +34,22 @@
             "identity": {
                 "type": "SystemAssigned"
             }
+        }, 
+        {
+            "name": "[concat(parameters('factoryName'), '/AzureBlobStorageLinkedService')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobStorage",
+                "typeProperties": {
+                    "serviceEndpoint": "[parameters('AzureBlobStorage1_properties_typeProperties_serviceEndpoint')]",
+                    "accountKind": "StorageV2"
+                }
+            },
+            "dependsOn": [
+                "[variables('factoryId')]"
+            ]
         }
     ]
 }

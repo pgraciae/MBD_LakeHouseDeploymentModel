@@ -24,14 +24,18 @@ Este proyecto tiene como objetivo automatizar el despliegue de una infraestructu
     ```bash
     git clone https://github.com/pgraciae/MBD_LakeHouseDeploymentModel.git
     ```
-2. Modificar el fichero .env para configurar las variables de entorno.
 
-3. Navegar hasta el directorio del proyecto.
+2. Seguir las instrucciones para obtener credenciales en Azure.
+
+
+3. Modificar el fichero .env para configurar las variables de entorno.
+
+4. Navegar hasta el directorio del proyecto.
     ```bash
     cd MBD_LakeHouseDeploymentModel
     ```
 
-4. Construir y ejecutar los contenedores de Docker.
+5. Construir y ejecutar los contenedores de Docker.
     ```bash
     docker-compose up --build
     ```
@@ -52,9 +56,7 @@ Este proyecto está bajo una licencia MIT. Ver el archivo LICENSE.md para más d
 - pol.graciae@gmail.com
 
 
-## Agradecimientos
-
-Este proyecto es parte de un trabajo de final de máster en [nombre de la institución]. Agradecimientos especiales a los tutores, revisores y a todos los que contribuyeron al desarrollo de este proyecto. 
+Este proyecto es parte de un trabajo de final de máster en La Salle URL. 
 
 ---
 

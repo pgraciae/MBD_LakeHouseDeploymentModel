@@ -6,3 +6,4 @@ airflow-data/logs
 airflow-data/plugins
 dc_old.yml
 airflow-data/
+airflow/dags/__pycache__/
